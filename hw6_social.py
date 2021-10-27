@@ -1,7 +1,7 @@
 """
 Social Media Analytics Project
-Name:
-Roll Number:
+Name: Kolluru Pranathi
+Roll Number: 2021501024
 """
 
 import hw6_social_tests as test
