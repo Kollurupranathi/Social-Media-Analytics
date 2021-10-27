@@ -76,8 +76,22 @@ Parameters: str
 Returns: list of strs
 '''
 def findHashtags(message):
-    return
-
+    words=message.replace('-', ' ').split()
+    hashTags=[]
+    for word in words:
+        if "#" in word:
+            result = '#'
+            for i in word[1:]:
+                if i not in endChars:
+                    result += i
+                elif i == '#':
+                    hashTags.append(result)
+                    result = '#'
+                    continue
+                else:
+                    break
+            hashTags.append(result)
+    return hashTags
 
 '''
 getRegionFromState(stateDf, state)
@@ -277,7 +291,7 @@ if __name__ == "__main__":
     test.week1Tests()
     print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
     test.runWeek1()
-    test.parseState()
+    test.findHashtags()
 
     ## Uncomment these for Week 2 ##
     """print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
