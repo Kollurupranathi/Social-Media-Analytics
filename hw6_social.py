@@ -76,22 +76,18 @@ Parameters: str
 Returns: list of strs
 '''
 def findHashtags(message):
-    words=message.replace('-', ' ').split()
-    hashTags=[]
-    for word in words:
-        if "#" in word:
-            result = '#'
-            for i in word[1:]:
-                if i not in endChars:
-                    result += i
-                elif i == '#':
-                    hashTags.append(result)
-                    result = '#'
-                    continue
-                else:
-                    break
-            hashTags.append(result)
-    return hashTags
+    lst=[]
+    m = message.split("#")
+    for x in m[1:len(m)]: 
+        string=""
+        for y in x:
+            if y not in endChars:
+                string+=y
+            else:
+                break
+        string="#"+string
+        lst.append(string)  
+    return lst
 
 '''
 getRegionFromState(stateDf, state)
@@ -181,7 +177,8 @@ def getDataCountByState(data, colName, dataToCount):
         elif row[colName]==dataToCount:
             if row['state'] not in temp:
                 temp[row['state']]=0
-            temp[row['state']]+=1   
+            temp[row['state']]+=1  
+   
     return temp
 
 
@@ -215,7 +212,13 @@ Parameters: dataframe
 Returns: dict mapping strs to ints
 '''
 def getHashtagRates(data):
-    return
+    tempo={}
+    for x in data['hashtags']:
+        for j in x:
+            if (j not in tempo) and len(j)!=0:
+                tempo[j]=0
+            tempo[j]+=1
+    return tempo
 
 
 '''
@@ -225,6 +228,7 @@ Parameters: dict mapping strs to ints ; int
 Returns: dict mapping strs to ints
 '''
 def mostCommonHashtags(hashtags, count):
+ 
     return
 
 
@@ -339,7 +343,7 @@ def scatterPlot(xValues, yValues, labels, title):
 # This code runs the test cases to check your work
 if __name__ == "__main__":
     # print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
-    # test.week1Tests()
+    #test.week2Tests()
     # print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
     #test.runWeek1()
     
@@ -347,7 +351,9 @@ if __name__ == "__main__":
     stateDf = makeDataFrame("data/statemappings.csv")
     addColumns(df, stateDf)
     addSentimentColumn(df)
-    test.testGetDataForRegion(df)
+    test.testGetHashtagRates(df)
+    # test.testGetDataForRegion(df)
+    # test.testFindHashtags()
 
     ## Uncomment these for Week 2 ##
     """print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
