@@ -76,22 +76,19 @@ Parameters: str
 Returns: list of strs
 '''
 def findHashtags(message):
-    words=message.replace('-', ' ').split()
-    hashTags=[]
-    for word in words:
-        if "#" in word:
-            result = '#'
-            for i in word[1:]:
-                if i not in endChars:
-                    result += i
-                elif i == '#':
-                    hashTags.append(result)
-                    result = '#'
-                    continue
-                else:
-                    break
-            hashTags.append(result)
-    return hashTags
+    lst=[]
+    m = message.split("#")
+    for x in m[1:len(m)]: 
+        string=""
+        for y in x:
+            if y not in endChars:
+                string+=y
+            else:
+                break
+        string="#"+string
+        lst.append(string)
+       
+    return lst
 
 '''
 getRegionFromState(stateDf, state)
@@ -215,7 +212,14 @@ Parameters: dataframe
 Returns: dict mapping strs to ints
 '''
 def getHashtagRates(data):
-    return
+    tempo={}
+    for x in data['hashtags']:
+        for j in x:
+            if (j not in tempo) and len(j)!=0:
+                tempo[j]=0
+            tempo[j]+=1
+    return tempo
+
 
 
 '''
@@ -225,8 +229,26 @@ Parameters: dict mapping strs to ints ; int
 Returns: dict mapping strs to ints
 '''
 def mostCommonHashtags(hashtags, count):
-    return
-
+    keys= list(hashtags.keys())
+    values= list(hashtags.values())
+    x=sorted(values)
+    x.reverse()
+    k={}
+    for j in range(0,count):
+        for p in range(len(values)):
+            if x[j]==values[p] and len(k)!=count:
+                k[keys[p]]=x[j]
+    return k      
+    # x=dict(sorted(hashtags.items(), key = lambda x: x[1], reverse = True))
+    # k={}
+    # num=0
+    # for i in x:
+    #         if num==count:
+    #             break
+    #         k[i]=x[i]
+    #         num+=1
+    # return k
+    
 
 '''
 getHashtagSentiment(data, hashtag)
@@ -347,7 +369,8 @@ if __name__ == "__main__":
     stateDf = makeDataFrame("data/statemappings.csv")
     addColumns(df, stateDf)
     addSentimentColumn(df)
-    test.testGetDataForRegion(df)
+    # test.testGetDataForRegion(df)
+    test.testMostCommonHashtags(df)
 
     ## Uncomment these for Week 2 ##
     """print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
