@@ -96,19 +96,6 @@ def findHashtags(message):
 
     if trigger == 1:
         hash.append(result)
-
-        # lst=[]
-        # m = message.split("#")
-        # for x in m[1:len(m)]: 
-        #     string=""
-        #     for y in x:
-        #         if y not in endChars:
-        #             string+=y
-        #         else:
-        #             break
-        #     string="#"+string
-        #     lst.append(string)
-        
     return hash
 
 '''
@@ -260,15 +247,7 @@ def mostCommonHashtags(hashtags, count):
             if x[j]==values[p] and len(k)!=count:
                 k[keys[p]]=x[j]
     return k      
-    # x=dict(sorted(hashtags.items(), key = lambda x: x[1], reverse = True))
-    # k={}
-    # num=0
-    # for i in x:
-    #         if num==count:
-    #             break
-    #         k[i]=x[i]
-    #         num+=1
-    # return k
+   
     
 
 '''
@@ -278,8 +257,20 @@ Parameters: dataframe ; str
 Returns: float
 '''
 def getHashtagSentiment(data, hashtag):
-    return
-
+    score=0
+    hashno=0
+    for index, row in data.iterrows():
+        if hashtag in findHashtags(row['text']):
+            hashno+=1
+            x= row['sentiment']  
+            if x=='positive':
+              score+=1
+            if x=='negative':
+              score-=1
+            if x=='neutral':
+              score+=0  
+    return (score/hashno)
+ 
 
 ### PART 3 ###
 
@@ -381,18 +372,18 @@ def scatterPlot(xValues, yValues, labels, title):
 
 # This code runs the test cases to check your work
 if __name__ == "__main__":
-    print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
-    test.week1Tests()
-    print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
-    test.runWeek1()
+    # print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
+    # test.week1Tests()
+    # print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
+    # test.runWeek1()
     
     df = makeDataFrame("data/politicaldata.csv")
     stateDf = makeDataFrame("data/statemappings.csv")
     addColumns(df, stateDf)
     addSentimentColumn(df)
     # test.testGetDataForRegion(df)
-    test.testMostCommonHashtags(df)
-
+    # test.testMostCommonHashtags(df)
+    test.testGetHashtagSentiment(df)
     # Uncomment these for Week 2 ##
     # print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
     # test.week2Tests()
