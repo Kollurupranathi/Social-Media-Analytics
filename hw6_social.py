@@ -76,19 +76,40 @@ Parameters: str
 Returns: list of strs
 '''
 def findHashtags(message):
-    lst=[]
-    m = message.split("#")
-    for x in m[1:len(m)]: 
-        string=""
-        for y in x:
-            if y not in endChars:
-                string+=y
-            else:
-                break
-        string="#"+string
-        lst.append(string)
-       
-    return lst
+
+    hash = []
+    trigger = 0
+    result = '#'
+    for letter in message:
+        if letter == '#':
+            if trigger == 1:
+                hash.append(result)
+                result = '#'
+            trigger = 1
+            continue
+        elif (letter in endChars) and trigger == 1:
+            hash.append(result)
+            result = '#'
+            trigger = 0
+        elif trigger == 1:
+            result += letter
+
+    if trigger == 1:
+        hash.append(result)
+
+        # lst=[]
+        # m = message.split("#")
+        # for x in m[1:len(m)]: 
+        #     string=""
+        #     for y in x:
+        #         if y not in endChars:
+        #             string+=y
+        #         else:
+        #             break
+        #     string="#"+string
+        #     lst.append(string)
+        
+    return hash
 
 '''
 getRegionFromState(stateDf, state)
@@ -360,10 +381,10 @@ def scatterPlot(xValues, yValues, labels, title):
 
 # This code runs the test cases to check your work
 if __name__ == "__main__":
-    # print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
-    # test.week1Tests()
-    # print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
-    #test.runWeek1()
+    print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
+    test.week1Tests()
+    print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
+    test.runWeek1()
     
     df = makeDataFrame("data/politicaldata.csv")
     stateDf = makeDataFrame("data/statemappings.csv")
@@ -372,11 +393,11 @@ if __name__ == "__main__":
     # test.testGetDataForRegion(df)
     test.testMostCommonHashtags(df)
 
-    ## Uncomment these for Week 2 ##
-    """print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
-    test.week2Tests()
-    print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
-    test.runWeek2()"""
+    # Uncomment these for Week 2 ##
+    # print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
+    # test.week2Tests()
+    # print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
+    # test.runWeek2()
 
     ## Uncomment these for Week 3 ##
     """print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
