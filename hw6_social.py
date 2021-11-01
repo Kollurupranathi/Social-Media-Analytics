@@ -76,22 +76,26 @@ Parameters: str
 Returns: list of strs
 '''
 def findHashtags(message):
-    words=message.replace('-', ' ').split()
-    hashTags=[]
-    for word in words:
-        if "#" in word:
+    hash = []
+    trigger = 0
+    result = '#'
+    for letter in message:
+        if letter == '#':
+            if trigger == 1:
+                hash.append(result)
+                result = '#'
+            trigger = 1
+            continue
+        elif (letter in endChars) and trigger == 1:
+            hash.append(result)
             result = '#'
-            for i in word[1:]:
-                if i not in endChars:
-                    result += i
-                elif i == '#':
-                    hashTags.append(result)
-                    result = '#'
-                    continue
-                else:
-                    break
-            hashTags.append(result)
-    return hashTags
+            trigger = 0
+        elif trigger == 1:
+            result += letter
+
+    if trigger == 1:
+        hash.append(result)
+    return hash
 
 '''
 getRegionFromState(stateDf, state)
