@@ -285,10 +285,7 @@ def graphStateCounts(stateCounts, title):
     x=list(stateCounts.keys())
     y=list(stateCounts.values())
     plt.xticks(ticks=list(range(len(y))), labels=x, rotation="vertical")
-    #fig = plt.figure(figsize = (15, 5))
     plt.bar(x, y)
-    # plt.xlabel("states")
-    # plt.ylabel("numbers")
     plt.title(title)
     plt.show()
     return
@@ -305,14 +302,10 @@ def graphTopNStates(stateCounts, stateFeatureCounts, n, title):
     featurerate = {}
     topstates = {} 
     for i in stateFeatureCounts: 
-        #print(i) 
         print("avg",stateFeatureCounts[i] / stateCounts[i])
         featurerate[i] = (stateFeatureCounts[i] / stateCounts[i]) 
-        #print(featurerate) 
         topstates = dict(Counter(featurerate).most_common(n)) 
     graphStateCounts(topstates, title)
-    
-        
     return
 
 
