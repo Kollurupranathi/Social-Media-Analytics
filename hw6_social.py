@@ -1,7 +1,7 @@
 """
 Social Media Analytics Project
-Name:
-Roll Number:
+Name: Kolluru Pranathi
+Roll Number: 2021501024
 """
 
 import hw6_social_tests as test
@@ -25,7 +25,9 @@ Parameters: str
 Returns: dataframe
 '''
 def makeDataFrame(filename):
-    return
+    data=pd.read_csv(filename)
+    return data
+    
 
 
 '''
@@ -35,7 +37,10 @@ Parameters: str
 Returns: str
 '''
 def parseName(fromString):
-    return
+    nameStart = fromString.find(":")
+    nameEnd=fromString.find("(")
+    name = fromString[nameStart+2:nameEnd-1]
+    return name
 
 
 '''
@@ -45,7 +50,10 @@ Parameters: str
 Returns: str
 '''
 def parsePosition(fromString):
-    return
+    positionStart = fromString.find("(")
+    positionEnd=fromString.find("from")
+    position = fromString[positionStart+1:positionEnd-1]
+    return position
 
 
 '''
@@ -55,7 +63,10 @@ Parameters: str
 Returns: str
 '''
 def parseState(fromString):
-    return
+    stateStart = fromString.find("from")+len("from ")
+    stateEnd=fromString.find(")")
+    state = fromString[stateStart:stateEnd]
+    return state
 
 
 '''
@@ -266,6 +277,7 @@ if __name__ == "__main__":
     test.week1Tests()
     print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
     test.runWeek1()
+    test.parseState()
 
     ## Uncomment these for Week 2 ##
     """print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
