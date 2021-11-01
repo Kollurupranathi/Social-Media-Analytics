@@ -76,7 +76,6 @@ Parameters: str
 Returns: list of strs
 '''
 def findHashtags(message):
-
     hash = []
     trigger = 0
     result = '#'
@@ -95,20 +94,7 @@ def findHashtags(message):
             result += letter
 
     if trigger == 1:
-        hash.append(result)
-
-        # lst=[]
-        # m = message.split("#")
-        # for x in m[1:len(m)]: 
-        #     string=""
-        #     for y in x:
-        #         if y not in endChars:
-        #             string+=y
-        #         else:
-        #             break
-        #     string="#"+string
-        #     lst.append(string)
-        
+        hash.append(result)  
     return hash
 
 '''
