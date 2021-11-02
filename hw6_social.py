@@ -85,7 +85,7 @@ def findHashtags(message):
                 hash.append(result)
                 result = '#'
             trigger = 1
-            continue
+           
         elif (letter in endChars) and trigger == 1:
             hash.append(result)
             result = '#'
