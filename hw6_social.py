@@ -223,7 +223,7 @@ def getHashtagRates(data):
     tempo={}
     for x in data['hashtags']:
         for j in x:
-            if (j not in tempo) and len(j)!=0:
+            if (j not in tempo):
                 tempo[j]=0
             tempo[j]+=1
     return tempo
